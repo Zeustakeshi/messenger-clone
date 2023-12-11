@@ -1,0 +1,43 @@
+### 
+@BASE_URL = http://localhost:3000/api
+
+### REGISTER
+POST {{BASE_URL}}/auth/register 
+Content-Type: application/json
+
+{
+    "username": "thanhhuong",
+    "password": "12345s6"
+}
+
+### LOGIN
+POST {{BASE_URL}}/auth/login 
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "12345s6"
+}
+
+### ADD FRIEND
+GET {{BASE_URL}}/user/add-friend/request/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzA5NTAyLCJleHAiOjE3MDIzMTMxMDJ9.XlYATmojSiCGRVb9Wc88Qqwhbf3xM0bmyA0lvyNcWNI
+
+### GET ALL PENDING ADD FRIEND
+GET {{BASE_URL}}/user/friends/pending
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzA2Nzg1LCJleHAiOjE3MDIzMTAzODV9.vyp5JLi3jdhExaUmCjdSVxMNPfB3fyop1mYHWkPlKrk
+
+
+### ACCEPT FRIEND
+GET {{BASE_URL}}/user/add-friend/accepted/thanhhuong
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzA5NTAyLCJleHAiOjE3MDIzMTMxMDJ9.XlYATmojSiCGRVb9Wc88Qqwhbf3xM0bmyA0lvyNcWNI
+
+
+### GET FRIENDS
+GET  {{BASE_URL}}/user/friends
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzE1NjY4LCJleHAiOjE3MDIzMTkyNjh9.oQ-cuyMqMMpct75Wgi2IDXtyOPs4MW-i8T3GdK3K-QU
+
+### GET SUGGESTION USER
+GET {{BASE_URL}}/user/suggestions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzA5NTAyLCJleHAiOjE3MDIzMTMxMDJ9.XlYATmojSiCGRVb9Wc88Qqwhbf3xM0bmyA0lvyNcWNI
+

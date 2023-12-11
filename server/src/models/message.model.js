@@ -1,0 +1,29 @@
+import { DataTypes, Sequelize } from "sequelize";
+
+/**
+ * @param {Sequelize} sequelize
+ */
+export default (sequelize) => {
+    const Message = sequelize.define(
+        "Message",
+        {
+            // Model attributes are defined here
+            id: {
+                type: DataTypes.UUID,
+                primaryKey: true,
+            },
+            data: {
+                type: DataTypes.TEXT,
+                allowNull: false,
+            },
+        },
+        {
+            // Other model options go here
+            modelName: "Message",
+            tableName: "Messages",
+            createdAt: true,
+            updatedAt: true,
+        }
+    );
+    return Message;
+};
