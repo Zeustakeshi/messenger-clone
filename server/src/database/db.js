@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 import userModel from "../models/user.model.js";
-import roomModel from "../models/room.model.js";
 import messageModel from "../models/message.model.js";
 import friendModel from "../models/friend.model.js";
 
@@ -27,42 +26,34 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.User = userModel(sequelize);
-db.Room = roomModel(sequelize);
 db.Message = messageModel(sequelize);
 db.Friend = friendModel(sequelize);
 
-// ======================= RELATION =======================
-// user - room
-db.Room.belongsToMany(db.User, {
-    through: "Rooms_Users",
-    foreignKey: "roomId",
-    otherKey: "username",
-});
+// ======================= RELATION ====================== //
 
-db.User.belongsToMany(db.Room, {
-    through: "Rooms_Users",
-    foreignKey: "username",
-    otherKey: "roomId",
-});
-
-// user - friend
+/** USER - FRIEND */
 
 db.User.hasMany(db.Friend, { foreignKey: "username1", as: "friends" });
 db.User.hasMany(db.Friend, { foreignKey: "username2", as: "friendOf" });
 db.Friend.belongsTo(db.User, { foreignKey: "username1" });
 db.Friend.belongsTo(db.User, { foreignKey: "username2" });
 
-// message - user
+/** MESSAGE USER */
 db.Message.belongsTo(db.User, {
-    foreignKey: "username",
+    foreignKey: "senderId",
 });
-db.User.hasMany(db.Message, { as: "messages", foreignKey: "username" });
 
-// message  - room
-db.Message.belongsTo(db.Room, { foreignKey: "roomId" });
-db.Room.hasMany(db.Message, { as: "messages", foreignKey: "roomId" });
+db.Message.belongsTo(db.User, {
+    foreignKey: "receiverId",
+});
 
-// message - message
+db.User.hasMany(db.Message, { as: "sendedMessage", foreignKey: "senderId" });
+db.User.hasMany(db.Message, {
+    as: "receivedMessage",
+    foreignKey: "receiverId",
+});
+
+/** MESSAGE - MESSAGE */
 db.Message.belongsToMany(db.Message, {
     through: "Replies",
     foreignKey: "parentId",
@@ -77,7 +68,7 @@ db.Message.belongsToMany(db.Message, {
     as: "parent",
 });
 
-// =========================================
+// ========================================= //
 export const initDatabase = async () => {
     try {
         await db.sequelize.authenticate();

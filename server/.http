@@ -6,7 +6,7 @@ POST {{BASE_URL}}/auth/register
 Content-Type: application/json
 
 {
-    "username": "thanhhuong",
+    "username": "admin",
     "password": "12345s6"
 }
 
@@ -15,29 +15,50 @@ POST {{BASE_URL}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "admin",
+    "username": "thanhhuong",
     "password": "12345s6"
 }
 
 ### ADD FRIEND
-GET {{BASE_URL}}/user/add-friend/request/admin
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzA5NTAyLCJleHAiOjE3MDIzMTMxMDJ9.XlYATmojSiCGRVb9Wc88Qqwhbf3xM0bmyA0lvyNcWNI
+GET {{BASE_URL}}/user/add-friend/request/thanhhuong
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzc5MjE2LCJleHAiOjE3MDIzODI4MTZ9.4WsQkwVESrIjwK-_IHLBODRAmyBYpag3MGmuZqJIrwM
 
 ### GET ALL PENDING ADD FRIEND
 GET {{BASE_URL}}/user/friends/pending
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzA2Nzg1LCJleHAiOjE3MDIzMTAzODV9.vyp5JLi3jdhExaUmCjdSVxMNPfB3fyop1mYHWkPlKrk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzc3MjkxLCJleHAiOjE3MDIzODA4OTF9.JKNIHsZNj3HpEQKLdTLePnmGe2LkYyVFhMrGQqNdT_8
 
 
 ### ACCEPT FRIEND
-GET {{BASE_URL}}/user/add-friend/accepted/thanhhuong
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzA5NTAyLCJleHAiOjE3MDIzMTMxMDJ9.XlYATmojSiCGRVb9Wc88Qqwhbf3xM0bmyA0lvyNcWNI
+GET {{BASE_URL}}/user/add-friend/accepted/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRoYW5oaHVvbmciLCJpYXQiOjE3MDIzNzkzMzQsImV4cCI6MTcwMjM4MjkzNH0.TWirU-7Asv6Fhfck-aQWYpqk4Z_6NJjQxYnAQOHLAWs
 
 
 ### GET FRIENDS
 GET  {{BASE_URL}}/user/friends
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzE1NjY4LCJleHAiOjE3MDIzMTkyNjh9.oQ-cuyMqMMpct75Wgi2IDXtyOPs4MW-i8T3GdK3K-QU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzc3MjkxLCJleHAiOjE3MDIzODA4OTF9.JKNIHsZNj3HpEQKLdTLePnmGe2LkYyVFhMrGQqNdT_8
 
 ### GET SUGGESTION USER
 GET {{BASE_URL}}/user/suggestions
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzA5NTAyLCJleHAiOjE3MDIzMTMxMDJ9.XlYATmojSiCGRVb9Wc88Qqwhbf3xM0bmyA0lvyNcWNI
+
+
+### SEND MESSAGE
+POST  {{BASE_URL}}/chat/messages/send
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzc5MjE2LCJleHAiOjE3MDIzODI4MTZ9.4WsQkwVESrIjwK-_IHLBODRAmyBYpag3MGmuZqJIrwM
+Content-Type: application/json
+
+{
+    "receiverId" : "thanhhuong",
+    "receiverType": "USER",
+    "data": "minh thanh ban roi nha caus"
+}
+
+
+### GET MESSAGE
+GET {{BASE_URL}}/chat/messages/latest/minhhieu
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzc5MjE2LCJleHAiOjE3MDIzODI4MTZ9.4WsQkwVESrIjwK-_IHLBODRAmyBYpag3MGmuZqJIrwM
+
+### GET ALL CHAT
+GET {{BASE_URL}}/chat/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzAyMzc5MjE2LCJleHAiOjE3MDIzODI4MTZ9.4WsQkwVESrIjwK-_IHLBODRAmyBYpag3MGmuZqJIrwM
 

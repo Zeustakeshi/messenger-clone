@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import Avatar from "./Avatar";
 import api from "../configs/api";
+import { socket } from "../socket/socket";
+import { useApp } from "../context/AppContext";
 
 const FriendSuggestionItem = ({ username, avatar }) => {
+    const { user } = useApp();
     const [sended, setSended] = useState(false);
     const [loading, setLoading] = useState(false);
+
     const handleAddFriend = async () => {
         if (sended || loading) return;
 
@@ -12,6 +16,16 @@ const FriendSuggestionItem = ({ username, avatar }) => {
             setLoading(true);
             const res = await api({
                 url: `/user/add-friend/request/${username}`,
+            });
+
+            socket.emit("add-friend", {
+                friend: {
+                    username: username,
+                },
+                user: {
+                    username: user.username,
+                    avatar: user.avatar,
+                },
             });
 
             if (res.data) setSended(true);
@@ -23,7 +37,7 @@ const FriendSuggestionItem = ({ username, avatar }) => {
 
     return (
         <div className="p-5 min-w-full min-h-[100px] rounded-md bg-white border border-slate-300 flex justify-start items-start gap-2">
-            <Avatar size={100} src={avatar}></Avatar>
+            <Avatar size={100} src={avatar} username={username}></Avatar>
             <div className="flex-1">
                 <p className="text-xl text-slate-900">{username}</p>
                 <div className="flex justify-start my-5 items-center gap-2">

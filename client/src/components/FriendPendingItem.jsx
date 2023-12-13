@@ -1,16 +1,31 @@
 import React, { useState } from "react";
 import Avatar from "./Avatar";
 import api from "../configs/api";
+import { socket } from "../socket/socket";
+import { useApp } from "../context/AppContext";
 
 const FriendPendingItem = ({ username, avatar, setPendingFriends }) => {
     const [acceptLoading, setAcceptLoading] = useState(false);
     const [rejectLoading, setRejectLoading] = useState(false);
+
+    const { user } = useApp();
+
     const handleAddFriend = async () => {
         setAcceptLoading(true);
         try {
             await api({
                 method: "GET",
                 url: `/user/add-friend/accepted/${username}`,
+            });
+            socket.emit("accept-friend", {
+                friend: {
+                    username,
+                    avatar,
+                },
+                user: {
+                    username: user.username,
+                    avatar: user.avatar,
+                },
             });
         } catch (error) {
             console.log(error);
@@ -40,7 +55,7 @@ const FriendPendingItem = ({ username, avatar, setPendingFriends }) => {
 
     return (
         <div className="p-5  min-w-full min-h-[100px] rounded-md bg-white border border-slate-300 flex justify-start items-start gap-2">
-            <Avatar size={100} src={avatar}></Avatar>
+            <Avatar size={100} src={avatar} username={username}></Avatar>
             <div className="flex-1">
                 <p className="text-xl text-slate-900">{username}</p>
                 <div className="flex justify-start my-5 items-center gap-2">

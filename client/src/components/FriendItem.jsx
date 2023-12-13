@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "./Avatar";
 import { socket } from "../socket/socket";
+import { CHAT_STATUS } from "../utils/chat";
 
-const FriendItem = ({ username, avatar, status }) => {
+const FriendItem = ({ username, avatar, status = "OFFLINE" }) => {
     const [online, setOnline] = useState(() => status === "ONLINE"); // 0 : offline, 1: online
 
     useEffect(() => {
@@ -25,7 +26,11 @@ const FriendItem = ({ username, avatar, status }) => {
     return (
         <div className="flex justify-between items-center w-full">
             <div className="flex-1 flex justify-start items-start gap-2">
-                <Avatar size={50} src={avatar}></Avatar>
+                <Avatar
+                    size={50}
+                    src={avatar}
+                    status={online ? CHAT_STATUS.ONLINE : CHAT_STATUS.OFFLINE}
+                ></Avatar>
                 <div className="flex-1 flex flex-col justify-start items-start">
                     <span className="text-lg font-medium text-slate-700">
                         {username}

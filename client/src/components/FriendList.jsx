@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import FriendItem from "./FriendItem";
 import api from "../configs/api";
 import coffeeLoadding from "../assets/coffee.loading.svg";
+import { socket } from "../socket/socket";
 
 const FriendList = () => {
     const [friends, setFriends] = useState([]);
@@ -19,6 +20,16 @@ const FriendList = () => {
             }
             setLoading(false);
         })();
+    }, []);
+
+    useEffect(() => {
+        socket.on("accepted-friend", (data) => {
+            setFriends((prev) => [...prev, data]);
+        });
+
+        return () => {
+            socket.off("accepted-friend");
+        };
     }, []);
 
     return (

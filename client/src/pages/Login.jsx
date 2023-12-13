@@ -36,7 +36,7 @@ const Login = () => {
 
             navigation("/");
         } catch (error) {
-            alert(error?.response?.data || error.response || error);
+            alert(error?.response?.data || error?.response || error);
         }
         setLoading(false);
     };

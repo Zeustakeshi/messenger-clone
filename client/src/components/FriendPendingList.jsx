@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import coffeeLoadding from "../assets/coffee.loading.svg";
 import api from "../configs/api";
 import FriendPendingItem from "./FriendPendingItem";
+import { socket } from "../socket/socket";
 
 const FriendPendingList = () => {
     const [pendingFriends, setPendingFriends] = useState([]);
@@ -27,6 +28,17 @@ const FriendPendingList = () => {
             setLoading(false);
         })();
     }, []);
+
+    useEffect(() => {
+        socket.on("request-add-friend", (data) => {
+            setPendingFriends((prev) => [...prev, data]);
+        });
+
+        return () => {
+            socket.off("request-add-friend");
+        };
+    }, []);
+
     if (pendingFriends.length == 0) return <></>;
     return (
         <div className="w-full h-full">
@@ -36,7 +48,6 @@ const FriendPendingList = () => {
 
             {pendingFriends.length ? (
                 <Swiper
-                    onAutoplayTimeLeft={2}
                     autoplay={true}
                     grabCursor={true}
                     effect={"creative"}
@@ -53,9 +64,8 @@ const FriendPendingList = () => {
                 >
                     {pendingFriends.map((user, index) => {
                         return (
-                            <SwiperSlide>
+                            <SwiperSlide key={index}>
                                 <FriendPendingItem
-                                    key={index}
                                     setPendingFriends={setPendingFriends}
                                     username={user.username}
                                     avatar={user.avatar}

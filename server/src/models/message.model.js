@@ -1,4 +1,5 @@
 import { DataTypes, Sequelize } from "sequelize";
+import { MESSAGE_RECEIVER_TYPE } from "../utils/chat.util.js";
 
 /**
  * @param {Sequelize} sequelize
@@ -14,6 +15,13 @@ export default (sequelize) => {
             },
             data: {
                 type: DataTypes.TEXT,
+                allowNull: false,
+            },
+            receiverType: {
+                type: DataTypes.ENUM([
+                    MESSAGE_RECEIVER_TYPE.GROUP,
+                    MESSAGE_RECEIVER_TYPE.USER,
+                ]),
                 allowNull: false,
             },
         },

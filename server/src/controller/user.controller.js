@@ -80,6 +80,30 @@ class UserController {
                 .json(error.message);
         }
     }
+
+    async getUserStatus(req, res) {
+        const { username } = req.params;
+
+        try {
+            const status = await userService.getUserStatus(username);
+            return res.status(StatusCodes.OK).json(status);
+        } catch (error) {
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error.message);
+        }
+    }
+
+    async getUserInfo(req, res) {
+        const { name } = req.params;
+
+        try {
+            const data = await userService.getUserInfo(name);
+            return res.status(StatusCodes.OK).json(data);
+        } catch (error) {
+            return res
+                .status(StatusCodes.INTERNAL_SERVER_ERROR)
+                .json(error.message);
+        }
+    }
 }
 
 export default new UserController();

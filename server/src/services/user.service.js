@@ -2,15 +2,24 @@ import crypto from "crypto";
 import { Op } from "sequelize";
 import db from "../database/db.js";
 import { FriendStatus } from "../utils/friend.util.js";
+import { USER_STATUS } from "../utils/user.util.js";
 
 class UserService {
     async findUserByUsername(username) {
-        try {
-            const data = await db.User.findByPk(username);
-            return data;
-        } catch (error) {
-            throw new Error(`find user error: ${error.message}`);
-        }
+        const data = await db.User.findByPk(username);
+        return data;
+    }
+
+    async isFriend(username, ortherUsername) {
+        const friend = await db.Friend.findOne({
+            where: {
+                [Op.or]: [
+                    { username1: username, username2: ortherUsername },
+                    { username1: ortherUsername, username2: username },
+                ],
+            },
+        });
+        return !!friend;
     }
 
     async getFriends(username) {
@@ -60,6 +69,60 @@ class UserService {
         return friends.flat(2).map((friend) => friend.User.dataValues);
     }
 
+    async getFriendOnines(username) {
+        const user = await this.findUserByUsername(username);
+        if (!user) throw new Error("user not found");
+
+        const friends = await Promise.all([
+            db.Friend.findAll({
+                where: {
+                    username1: username,
+                    type: FriendStatus.ACCEPTED,
+                },
+                attributes: [],
+                include: [
+                    {
+                        model: db.User,
+                        on: {
+                            username: {
+                                [Op.eq]: db.Sequelize.col("Friend.username2"),
+                            },
+                            status: USER_STATUS.ONLINE,
+                        },
+                        attributes: ["username", "avatar", "status"],
+                    },
+                ],
+            }),
+            db.Friend.findAll({
+                where: {
+                    username2: username,
+                    type: FriendStatus.ACCEPTED,
+                },
+                attributes: [],
+                include: [
+                    {
+                        model: db.User,
+                        on: {
+                            username: {
+                                [Op.eq]: db.Sequelize.col("Friend.username1"),
+                            },
+                            status: USER_STATUS.ONLINE,
+                        },
+                        attributes: ["username", "avatar", "status"],
+                    },
+                ],
+            }),
+        ]);
+
+        return friends.flat(2).reduce((prev, friend) => {
+            if (friend.dataValues.User) {
+                return [...prev, friend.dataValues.User.dataValues];
+            } else {
+                return prev;
+            }
+        }, []);
+    }
+
     async getSuggestionUser(username) {
         const allfriend = await db.Friend.findAll({
             where: {
@@ -80,6 +143,7 @@ class UserService {
                 },
             },
             attributes: ["username", "avatar", "status"],
+            limit: 10,
         });
         return sugggestions;
     }
@@ -176,6 +240,21 @@ class UserService {
         const user = await this.findUserByUsername(username);
         user.status = status;
         await user.save();
+    }
+
+    async getUserStatus(username) {
+        const status = await db.User.findByPk(username, {
+            attributes: ["status"],
+        });
+        return status;
+    }
+
+    async getUserInfo(username) {
+        const user = await db.User.findByPk(username, {
+            attributes: ["username", "avatar", "status"],
+        });
+
+        return user;
     }
 }
 

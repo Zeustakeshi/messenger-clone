@@ -8,16 +8,19 @@ export class UserOnlineService {
 
     async newUserOnline(socket) {
         const username = socket.user.username;
+        const friendOnlines = await this.getUserFriendOnlines(socket);
+
         this.users[username] = {
             ...socket.user,
             socketId: socket.id,
-            friends: await this.getUserFriendOnlines(socket),
+            friends: friendOnlines,
+            callTo: null,
         };
         await userService.updateStatus(username, USER_STATUS.ONLINE);
     }
 
-    getUserInfo(socket) {
-        return this.users[socket.user.username];
+    getUserInfo(username) {
+        return this.users[username];
     }
 
     async removeUserOnline(socket) {
@@ -27,15 +30,50 @@ export class UserOnlineService {
     }
 
     async getUserFriendOnlines(socket) {
-        let friends = await userService.getFriends(socket.user.username);
-        friends = friends.map((friend) => friend.username);
-
-        const onlines = [];
-
-        for (const username in this.users) {
-            if (friends.includes(username)) onlines.push(username);
+        try {
+            let friends = await userService.getFriendOnines(
+                socket.user.username
+            );
+            friends = friends.map((friend) => friend.username);
+            return friends;
+        } catch (error) {
+            console.log(error);
+            return [];
         }
-        return onlines;
+    }
+
+    setUserInfo(username, callback) {
+        if (!this.users[username]) throw new Error("user online not found!");
+        return (this.users[username] = callback(this.users[username]));
+    }
+
+    updateFriendOnline(username, friendName) {
+        try {
+            return this.setUserInfo(username, (prev) => {
+                return {
+                    ...prev,
+                    friends: [...prev.friends, friendName],
+                };
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    getUserStatus(username) {
+        if (this.getUserInfo(username)) {
+            return USER_STATUS.ONLINE;
+        } else {
+            return USER_STATUS.OFFLINE;
+        }
+    }
+
+    getCallTo(username) {
+        return this.users[username].callTo;
+    }
+
+    setCallTo(username, to) {
+        this.users[username].callTo = to;
     }
 }
 

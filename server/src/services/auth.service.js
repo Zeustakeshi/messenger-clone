@@ -7,6 +7,7 @@ class AuthService {
     async register(username, password) {
         const data = await userService.findUserByUsername(username);
         const existedUser = data?.dataValues;
+
         if (existedUser) throw new Error("user already exists!");
 
         // hash password
@@ -38,7 +39,7 @@ class AuthService {
 
     async login(username, password) {
         const data = await userService.findUserByUsername(username);
-        const existedUser = data.dataValues;
+        const existedUser = data?.dataValues;
         if (!existedUser) throw new Error("username not exists!");
 
         const isValidPassword = bcrypt.compareSync(

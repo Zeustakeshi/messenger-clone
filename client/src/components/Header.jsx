@@ -20,7 +20,7 @@ const Header = () => {
                 <h1 className="text-2xl font-semibold text-right">
                     {user?.username}
                 </h1>
-                <Avatar src={user?.avatar}></Avatar>
+                {/* <Avatar src={user?.avatar}></Avatar> */}
             </div>
             <button
                 onClick={handleLogout}

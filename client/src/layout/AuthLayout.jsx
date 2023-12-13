@@ -6,10 +6,7 @@ const AuthLayout = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
-        console.log({ user });
-        if (!user?.username) {
-            navigation("/auth/login");
-        } else {
+        if (user || user?.username) {
             navigation("/");
         }
     }, [user]);
