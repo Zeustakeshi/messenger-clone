@@ -237,9 +237,14 @@ class UserService {
     }
 
     async updateStatus(username, status) {
-        const user = await this.findUserByUsername(username);
-        user.status = status;
-        await user.save();
+        try {
+            const user = await this.findUserByUsername(username);
+            user.status = status;
+
+            await user.save();
+        } catch (error) {
+            console.log("user not found");
+        }
     }
 
     async getUserStatus(username) {

@@ -13,7 +13,7 @@ const sequelize = new Sequelize({
     username: process.env.DB_USERNAME,
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
-    logging: false,
+    logging: !!(process.env.LOG === "ON"),
     sync: {
         alter: {
             drop: true,
@@ -74,8 +74,10 @@ export const initDatabase = async () => {
         await db.sequelize.authenticate();
         console.log("Connection has been established successfully.");
 
-        // await db.sequelize.sync({ force: true });
-        console.log("Drop and re-sync db.");
+        if (!!(process.env.DB_SYNC === "ON")) {
+            await db.sequelize.sync({ force: true });
+            console.log("Drop and re-sync db.");
+        }
     } catch (error) {
         console.log(`inint database with error: \n >> ${error}`);
     }

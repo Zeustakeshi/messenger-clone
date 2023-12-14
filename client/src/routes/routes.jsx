@@ -14,6 +14,7 @@ import CallLayout from "../layout/CallLayout";
 import IncomeCall from "../pages/IncomeCall2";
 import Call from "../pages/Call";
 import Test from "../components/Test";
+import Notfound from "../pages/Notfound";
 
 const PrivateRoute = ({ children }) => {
     const { user } = useApp();
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
     {
         path: "test",
         element: <Test></Test>,
+    },
+    {
+        path: "*",
+        element: <Notfound></Notfound>,
     },
 ]);
 

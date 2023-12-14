@@ -7,16 +7,20 @@ export class UserOnlineService {
     }
 
     async newUserOnline(socket) {
-        const username = socket.user.username;
-        const friendOnlines = await this.getUserFriendOnlines(socket);
+        try {
+            const username = socket.user.username;
+            const friendOnlines = await this.getUserFriendOnlines(socket);
 
-        this.users[username] = {
-            ...socket.user,
-            socketId: socket.id,
-            friends: friendOnlines,
-            callTo: null,
-        };
-        await userService.updateStatus(username, USER_STATUS.ONLINE);
+            this.users[username] = {
+                ...socket.user,
+                socketId: socket.id,
+                friends: friendOnlines,
+                callTo: null,
+            };
+            await userService.updateStatus(username, USER_STATUS.ONLINE);
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
     getUserInfo(username) {
@@ -26,7 +30,11 @@ export class UserOnlineService {
     async removeUserOnline(socket) {
         const username = socket.user.username;
         delete this.users[username];
-        await userService.updateStatus(username, USER_STATUS.OFFLINE);
+        try {
+            await userService.updateStatus(username, USER_STATUS.OFFLINE);
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
     async getUserFriendOnlines(socket) {
@@ -69,10 +77,11 @@ export class UserOnlineService {
     }
 
     getCallTo(username) {
-        return this.users[username].callTo;
+        return this.users[username]?.callTo;
     }
 
     setCallTo(username, to) {
+        if (!this.users[username]) return;
         this.users[username].callTo = to;
     }
 }
