@@ -4,6 +4,7 @@ import loading2SVG from "../assets/loading2.svg";
 import api from "../configs/api";
 import { useApp } from "../context/AppContext";
 import { socket } from "../socket/socket";
+import IonIcon from "@reacticons/ionicons";
 
 const IncomeCall = () => {
     const [userCall, setUserCall] = useState(null);
@@ -83,7 +84,7 @@ const IncomeCall = () => {
                         onClick={handleAcceptCall}
                         className="text-lg font-semibold z-10 absolute-center w-full h-full  shadow-xl bg-green-600 text-white rounded-full"
                     >
-                        <ion-icon name="call"></ion-icon>
+                        <IonIcon name="call"></IonIcon>
                     </button>
                     <div className=" w-[100%] h-[100%] rounded-[inherit] bg-green-500 bg-opacity-60 backdrop-blur animate-ping"></div>
                 </div>
@@ -92,7 +93,7 @@ const IncomeCall = () => {
                         onClick={handleRejectCall}
                         className="text-lg font-semibold z-10 absolute-center w-full h-full  shadow-xl bg-rose-600 text-white rounded-full"
                     >
-                        <ion-icon name="close"></ion-icon>
+                        <IonIcon name="close"></IonIcon>
                     </button>
                     <div className=" w-[100%] h-[100%] rounded-[inherit] bg-rose-500 bg-opacity-60 backdrop-blur animate-ping"></div>
                 </div>

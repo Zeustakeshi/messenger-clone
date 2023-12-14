@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useChat } from "../../context/ChatContext";
 import { socket } from "../../socket/socket";
 import Avatar from "../Avatar";
+import IonIcon from "@reacticons/ionicons";
 
 const ChatHeader = () => {
     const { status, currentChat } = useChat();
@@ -29,7 +30,7 @@ const ChatHeader = () => {
                     to="/home"
                     className="inline-block hover:text-blue-500 font-semibold text-lg p-2"
                 >
-                    <ion-icon name="chevron-back-outline"></ion-icon>
+                    <IonIcon name="chevron-back-outline"></IonIcon>
                 </NavLink>
                 <Avatar username={currentChat.id} status={status}></Avatar>
                 <p className="text-lg font-semibold text-slate-600">
@@ -41,13 +42,13 @@ const ChatHeader = () => {
                     onClick={handleVoiceCall}
                     className="p-3 hover:bg-blue-500 hover:text-white font-semibold text-slate-600 flex justify-center items-center rounded-md "
                 >
-                    <ion-icon name="call-outline"></ion-icon>
+                    <IonIcon name="call-outline"></IonIcon>
                 </button>
                 <button
                     onClick={handleVideoCall}
                     className="p-3 hover:bg-blue-500 hover:text-white font-semibold text-slate-600 flex justify-center items-center rounded-md "
                 >
-                    <ion-icon name="videocam-outline"></ion-icon>
+                    <IonIcon name="videocam-outline"></IonIcon>
                 </button>
             </div>
         </div>

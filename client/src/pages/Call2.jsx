@@ -5,6 +5,7 @@ import { useApp } from "../context/AppContext";
 import { socket } from "../socket/socket";
 import Peer from "peerjs";
 import { useCall } from "../context/CallContext";
+import IonIcon from "@reacticons/ionicons";
 
 const Call = () => {
     const [openAudio, setOpenAudio] = useState(false);
@@ -261,7 +262,7 @@ const Call = () => {
                         onClick={handleReCall}
                         className={`p-4 flex justify-center items-center bg-slate-50 shadow-xl rounded-lg text-green-600`}
                     >
-                        <ion-icon name="reload-outline"></ion-icon>
+                        <IonIcon name="reload-outline"></IonIcon>
                     </button>
                 )}
                 <button
@@ -271,9 +272,9 @@ const Call = () => {
                     } shadow-xl rounded-lg`}
                 >
                     {openAudio ? (
-                        <ion-icon name="mic"></ion-icon>
+                        <IonIcon name="mic"></IonIcon>
                     ) : (
-                        <ion-icon name="mic-off"></ion-icon>
+                        <IonIcon name="mic-off"></IonIcon>
                     )}
                 </button>
                 <button
@@ -283,16 +284,16 @@ const Call = () => {
                     } shadow-xl rounded-lg`}
                 >
                     {openCamera ? (
-                        <ion-icon name="videocam"></ion-icon>
+                        <IonIcon name="videocam"></IonIcon>
                     ) : (
-                        <ion-icon name="videocam-off"></ion-icon>
+                        <IonIcon name="videocam-off"></IonIcon>
                     )}
                 </button>
                 <button
                     onClick={endCall}
                     className="p-4 flex justify-center items-center bg-rose-600 text-white shadow-xl rounded-lg"
                 >
-                    <ion-icon name="call"></ion-icon>
+                    <IonIcon name="call"></IonIcon>
                 </button>
             </div>
         </div>

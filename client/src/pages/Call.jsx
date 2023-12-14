@@ -4,6 +4,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import { socket } from "../socket/socket";
 import loadingSVG from "../assets/loading.svg";
+import IonIcon from "@reacticons/ionicons";
 
 const CALL_STATE = {
     CALLING: "CALLING",
@@ -124,7 +125,7 @@ const Call = () => {
                 onClick={endCall}
                 className="mt-10 px-8 min-w-[150px] py-4 rounded-md shadow-xl bg-rose-600 text-white text-2xl font-semibold"
             >
-                <ion-icon name="call-outline"></ion-icon>
+                <IonIcon name="call-outline"></IonIcon>
             </button>
         </div>
     );

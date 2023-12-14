@@ -5,6 +5,7 @@ import api from "../../configs/api";
 import { socket } from "../../socket/socket";
 import { useApp } from "../../context/AppContext";
 import { PROCESS_SEND_MESSAGE } from "../../utils/chat";
+import IonIcon from "@reacticons/ionicons";
 
 const MessageInput = () => {
     const { reply, setReply } = useChat();
@@ -99,7 +100,7 @@ const MessageInput = () => {
                         onClick={() => setReply(null)}
                         className="absolute top-0 right-0 p-1 rounded-full bg-slate-300 flex justify-center items-center text-white"
                     >
-                        <ion-icon name="close-outline"></ion-icon>
+                        <IonIcon name="close-outline"></IonIcon>
                     </button>
                 </div>
             )}
@@ -126,7 +127,7 @@ const MessageInput = () => {
                             : " text-slate-300"
                     }`}
                 >
-                    <ion-icon name="send"></ion-icon>
+                    <IonIcon name="send"></IonIcon>
                 </button>
             </form>
         </div>

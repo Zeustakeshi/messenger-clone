@@ -10,6 +10,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@reacticons/ionicons": "^7.1.0",
         "axios": "^1.6.2",
         "js-cookie": "^3.0.5",
         "moment": "^2.29.4",
@@ -19,7 +20,7 @@
         "react-infinite-scroll-component": "^6.1.0",
         "react-router-dom": "^6.20.1",
         "simple-peer": "^9.11.1",
-        "slocket.io-cient": "^4.7.2",
+        "socket.io-client": "^4.7.2",
         "swiper": "^11.0.5",
         "vite-plugin-node-polyfills": "^0.17.0"
     },

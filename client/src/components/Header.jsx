@@ -3,6 +3,7 @@ import Avatar from "./Avatar";
 import { useApp } from "../context/AppContext";
 import { socket } from "../socket/socket";
 import Cookies from "js-cookie";
+import IonIcon from "@reacticons/ionicons";
 
 const Header = () => {
     const { user, setUser } = useApp();
@@ -26,7 +27,7 @@ const Header = () => {
                 onClick={handleLogout}
                 className="bg-rose-300 bg-opacity-50 text-rose-500 w-[30px] h-[30px] flex justify-center items-center rounded-md"
             >
-                <ion-icon name="log-out-outline"></ion-icon>
+                <IonIcon name="log-out-outline"></IonIcon>
             </button>
         </header>
     );
