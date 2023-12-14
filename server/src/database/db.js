@@ -19,6 +19,9 @@ const sequelize = new Sequelize({
             drop: true,
         },
     },
+    dialectOptions: {
+        ssl: true,
+    },
 });
 
 const db = {};

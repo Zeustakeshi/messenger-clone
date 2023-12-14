@@ -33,7 +33,7 @@ const MessageList = () => {
     useEffect(() => {
         scrollRef.current?.scrollIntoView({
             behavior: "smooth",
-            block: "start",
+            block: "end",
         });
     }, [messages]);
 

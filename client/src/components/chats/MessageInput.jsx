@@ -54,7 +54,7 @@ const MessageInput = () => {
         try {
             setProcessSendMessage(PROCESS_SEND_MESSAGE.PENDING);
             setMessage("");
-            inputRef.current?.focus();
+            // inputRef.current?.focus();
             const res = await api({
                 method: "POST",
                 url: "/chat/messages/send",
